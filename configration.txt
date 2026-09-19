@@ -1,0 +1,358 @@
+R0
+
+Router(config)#interface f0/0
+Router(config-if)#no shutdown
+Router(config-if)#ip address 201.20.20.200.255.255.255.0
+Router(config)#interface f0/1
+Router(config-if)#no shutdown
+Router(config-if)#ip address 201.30.30.100.255.255.255.0
+Router(config-if)#ex
+Router(config)#router ospf 1
+Router(config-router)#network 201.20.20.0 255.255.255.0 area 0
+Router(config-router)#ex
+Router(config)#router eigrp 100
+Router(config-router)#network 201.30.30.0 0.0.0.255
+===========================================================================
+R1
+
+Router(config)#interface f0/0
+Router(config-if)#no shutdown
+Router(config-if)#ip address 201.20.20.100.255.255.255.0
+Router(config)#interface f0/1
+Router(config-if)#no shutdown
+Router(config-if)#ip address 201.10.10.200.255.255.255.0
+Router(config-if)#ex
+Router(config)#router ospf 1
+Router(config-router)#network 201.10.10.0 255.255.255.0 area 0
+Router(config-router)#network 201.20.20.0 255.255.255.0 area 0
+==========================================================================
+R2
+
+Router(config)#interface f0/0
+Router(config-if)#no shutdown
+Router(config-if)#ip address 201.30.30.200.255.255.255.0
+Router(config)#interface f0/1
+Router(config-if)#no shutdown
+Router(config-if)#ip address 201.40.40.100.255.255.255.0
+Router(config-if)#ex
+Router(config)#router eigrp 100
+Router(config-router)#network 201.30.30.0 0.0.0.255
+Router(config-router)#network 201.40.40.0 0.0.0.255
+
+============================================================================
+CORSW1
+
+CORSW1(config)#vlan 10
+CORSW1(config-vlan)#vlan 20
+CORSW1(config-vlan)#vlan 30
+CORSW1(config-vlan)#vlan 40
+CORSW1(config-vlan)#vlan 50
+CORSW1(config-vlan)#vlan 60
+CORSW1(config-vlan)#ex
+CORSW1(config)#interface range f0/1 - 9
+CORSW1(config-if-range)#switchport trunk encapsulation dot1q
+CORSW1(config-if-range)#switchport mode trunk
+CORSW1(config-if-range)#ex
+CORSW1(config)#interface range f0/1 - 4
+CORSW1(config-if-range)#channel-group 1 mode active
+CORSW1(config)#interface range f0/5 - 8
+CORSW1(config-if-range)#channel-group 2 mode active
+CORSW1(config-if-range)#ex
+CORSW1(config)#vtp mode server
+CORSW1(config)#vtp domain mayar
+CORSW1(config)#vtp password 1234
+CORSW1(config)#interface range f0/1 - 4
+CORSW1(config-if)#interface vlan 10
+CORSW1(config-if)#ip address 192.168.10.100 255.255.255.0
+CORSW1(config-if)#interface vlan 20
+CORSW1(config-if)#ip address 192.168.20.100 255.255.255.0
+CORSW1(config-if)#interface vlan 30
+CORSW1(config-if)#ip address 192.168.30.100 255.255.255.0
+CORSW1(config-if)#interface vlan 40
+CORSW1(config-if)#ip address 192.168.40.100 255.255.255.0
+CORSW1(config-if)#interface vlan 50
+CORSW1(config-if)#ip address 192.168.50.100 255.255.255.0
+CORSW1(config-if)#interface vlan 60
+CORSW1(config-if)#ip address 192.168.60.100 255.255.255.0
+CORSW1(config-if)#ex
+CORSW1(config)#ip routing
+CORSW1(config)#ip dhcp pool v10
+CORSW1(dhcp-config)#network 192.168.10.0 255.255.255.0
+CORSW1(dhcp-config)#default-router 192.168.10.100
+CORSW1(config)#ip dhcp pool v20
+CORSW1(dhcp-config)#network 192.168.20.0 255.255.255.0
+CORSW1(dhcp-config)#default-router 192.168.20.100
+CORSW1(config)#ip dhcp pool v30
+CORSW1(dhcp-config)#network 192.168.30.0 255.255.255.0
+CORSW1(dhcp-config)#default-router 192.168.30.100
+CORSW1(config)#ip dhcp pool v40
+CORSW1(dhcp-config)#network 192.168.40.0 255.255.255.0
+CORSW1(dhcp-config)#default-router 192.168.40.100
+CORSW1(config)#ip dhcp pool v50
+CORSW1(dhcp-config)#network 192.168.50.0 255.255.255.0
+CORSW1(dhcp-config)#default-router 192.168.50.100
+CORSW1(config)#ip dhcp pool v60
+CORSW1(dhcp-config)#network 192.168.60.0 255.255.255.0
+CORSW1(dhcp-config)#default-router 192.168.60.100
+CORSW1(dhcp-config)#ex
+CORSW1(config)#interface f0/9
+CORSW1(config-if)#no switchport
+CORSW1(config-if)#ip address 201.10.10.100 255.255.255.0
+CORSW1(config)#router ospf 1
+CORSW1(config-router)#network 201.10.10.0 0.0.0.255 area 0
+CORSW1(config-router)#network 192.168.10.0 0.0.0.255 area 0
+CORSW1(config-router)#network 192.168.20.0 0.0.0.255 area 0
+CORSW1(config-router)#network 192.168.30.0 0.0.0.255 area 0
+CORSW1(config-router)#network 192.168.40.0 0.0.0.255 area 0
+CORSW1(config-router)#network 192.168.50.0 0.0.0.255 area 0
+CORSW1(config-router)#network 192.168.60.0 0.0.0.255 area 0
+
+===========================================================================
+CORSW2
+
+CORSW2(config)#vlan 70
+CORSW2(config-vlan)#vlan 80
+CORSW2(config-vlan)#vlan 90
+CORSW2(config-vlan)#vlan 100
+CORSW2(config-vlan)#vlan 110
+CORSW2(config-vlan)#vlan 120
+CORSW2(config-vlan)#ex
+CORSW2(config)#interface range f0/1 - 9
+CORSW2(config-if-range)#switchport trunk encapsulation dot1q
+CORSW2(config-if-range)#switchport mode trunk 
+CORSW2(config-if-range)#ex
+CORSW2(config)#interface range f0/1 - 4
+CORSW2(config-if-range)#channel-group 1 mode active
+CORSW2(config)#interface range f0/5 - 8
+CORSW2(config-if-range)#channel-group 2 mode active
+CORSW2(config-if-range)#ex
+CORSW2(config)#vtp domain mayarr
+CORSW2(config)#vtp password 1234
+CORSW2(config)#interface range f0/1 - 4
+CORSW2(config-if)#interface vlan 70
+CORSW2(config-if)#ip address 192.168.70.100 255.255.255.0
+CORSW2(config-if)#interface vlan 80
+CORSW2(config-if)#ip address 192.168.80.100 255.255.255.0
+CORSW2(config-if)#interface vlan 90
+CORSW2(config-if)#ip address 192.168.90.100 255.255.255.0
+CORSW2(config-if)#interface vlan 100
+CORSW2(config-if)#ip address 192.168.100.100 255.255.255.0
+CORSW2(config-if)#interface vlan 110
+CORSW2(config-if)#ip address 192.168.110.100 255.255.255.0
+CORSW2(config-if)#interface vlan 120
+CORSW2(config-if)#ip address 192.168.120.100 255.255.255.0
+CORSW2(config-if)#ex
+CORSW2(config)#ip routing
+CORSW2(config)#ip dhcp pool v70
+CORSW2(dhcp-config)#network 192.168.70.0 255.255.255.0
+CORSW2(dhcp-config)#default-router 192.168.70.100
+CORSW2(config)#ip dhcp pool v80
+CORSW2(dhcp-config)#network 192.168.80.0 255.255.255.0
+CORSW2(dhcp-config)#default-router 192.168.80.100
+CORSW2(config)#ip dhcp pool v90
+CORSW2(dhcp-config)#network 192.168.90.0 255.255.255.0
+CORSW2(dhcp-config)#default-router 192.168.90.100
+CORSW2(config)#ip dhcp pool v100
+CORSW2(dhcp-config)#network 192.168.100.0 255.255.255.0
+CORSW2(dhcp-config)#default-router 192.168.100.100
+CORSW2(config)#ip dhcp pool v110
+CORSW2(dhcp-config)#network 192.168.110.0 255.255.255.0
+CORSW2(dhcp-config)#default-router 192.168.110.100
+CORSW2(config)#ip dhcp pool v120
+CORSW2(dhcp-config)#network 192.168.120.0 255.255.255.0
+CORSW2(dhcp-config)#default-router 192.168.120.100
+CORSW2(dhcp-config)#ex
+CORSW2(config)#interface f0/9
+CORSW2(config-if)#no switchport
+CORSW2(config-if)#ip address 201.40.40.200 255.255.255.0
+CORSW2(config-if)#ex
+CORSW2(config)#router eigrp 100
+CORSW2(config-router)#network 201.40.40.0 0.0.0.255
+CORSW2(config-router)#network 192.168.70.0 0.0.0.255
+CORSW2(config-router)#network 192.168.80.0 0.0.0.255
+CORSW2(config-router)#network 192.168.90.0 0.0.0.255
+CORSW2(config-router)#network 192.168.100.0 0.0.0.255
+CORSW2(config-router)#network 192.168.110.0 0.0.0.255
+CORSW2(config-router)#network 192.168.120.0 0.0.0.255
+
+=============================================================================
+DES1
+
+DES1(config)#vtp mode client
+DES1(config)#vtp domain mayar
+DES1(config)#vtp password 1234
+DES1(config)#interface range f0/1 - 4
+DES1(config-if-range)#channel-group 1 mode passive
+DES1(config)#interface range f0/1 - 7
+DES1(config-if-range)#switchport trunk encapsulation dot1q
+DES1(config-if-range)#switchport mode trunk 
+DES1(config)#spanning-tree mode pvst 
+DES1(config)#spanning-tree vlan 10,30,50 root primary 
+DES1(config)#spanning-tree vlan 20,40,60 root secondary 
+DES1(config)#interface range f0/5 - 7
+DES1(config-if-range)#spanning-tree guard root 
+
+============================================================================
+DES2
+
+DES2(config)#vtp mode client
+DES2(config)#vtp domain mayar
+DES2(config)#vtp password 1234
+DES2(config)#interface range f0/1 - 4
+DES2(config-if-range)#channel-group 2 mode passive
+DES2(config)#interface range f0/1 - 7
+DES2(config-if-range)#switchport trunk encapsulation dot1q
+DES2(config-if-range)#switchport mode trunk 
+DES2(config)#spanning-tree mode pvst 
+DES2(config)#spanning-tree vlan 10,30,50 root secondary 
+DES2(config)#spanning-tree vlan 20,40,60 root primary 
+DES2(config)#interface range f0/5 - 7
+DES2(config-if-range)#spanning-tree guard root 
+
+=============================================================================
+DES3
+
+DES3(config)#vtp mode client
+DES3(config)#vtp domain mayarr
+DES3(config)#vtp password 1234
+DES3(config)#interface range f0/1 - 4
+DES3(config-if-range)#channel-group 1 mode passive
+DES3(config)#interface range f0/1 - 7
+DES3(config-if-range)#switchport trunk encapsulation dot1q
+DES3(config-if-range)#switchport mode trunk 
+DES3(config)#spanning-tree mode pvst 
+DES3(config)#spanning-tree vlan 70,90,100 root primary 
+DES3(config)#spanning-tree vlan 80,100,120 root secondary
+DES3(config)#interface range f0/5 - 7
+DES3(config-if-range)#spanning-tree guard root 
+
+
+=============================================================================
+DES4
+
+DES4(config)#vtp mode client
+DES4(config)#vtp domain mayarr
+DES4(config)#vtp password 1234
+DES4(config)#interface range f0/1 - 4
+DES4(config-if-range)#channel-group 2 mode passive
+DES4(config)#interface range f0/1 - 7
+DES4(config-if-range)#switchport trunk encapsulation dot1q
+DES4(config-if-range)#switchport mode trunk 
+DES4(config)#spanning-tree mode pvst 
+DES4(config)#spanning-tree vlan 70,90,100 root secondary 
+DES4(config)#spanning-tree vlan 80,100,120 root primary
+DES4(config)#interface range f0/5 - 7
+DES4(config-if-range)#spanning-tree guard root 
+
+
+============================================================================
+ACC1
+
+ACC1(config)#vtp mode client
+ACC1(config)#vtp domain mayar
+ACC1(config)#vtp password 1234
+ACC1(config)#interface range f0/1 - 2
+ACC1(config-if-range)#switchport access vlan 10
+ACC1(config-if-range)#interface range f0/3 - 4
+ACC1(config-if-range)#switchport access vlan 20
+ACC1(config)#interface range f0/1 - 4
+ACC1(config-if-range)#switchport mode access 
+ACC1(config-if-range)#switchport port-security 
+ACC1(config-if-range)#switchport port-security maximum 1
+ACC1(config-if-range)#switchport port-security mac-address sticky 
+ACC1(config-if-range)#switchport port-security violation shutdown 
+ACC1(config-if-range)#spanning-tree bpduguard enable
+
+============================================================================
+ACC2
+
+ACC2(config)#vtp mode client
+ACC2(config)#vtp domain mayar
+ACC2(config)#vtp password 1234
+ACC2(config)#interface range f0/1 - 2
+ACC2(config-if-range)#switchport access vlan 30
+ACC2(config-if-range)#interface range f0/3 - 4
+ACC2(config-if-range)#switchport access vlan 40
+ACC2(config)#interface range f0/1 - 4
+ACC2(config-if-range)#switchport mode access 
+ACC2(config-if-range)#switchport port-security 
+ACC2(config-if-range)#switchport port-security maximum 1
+ACC2(config-if-range)#switchport port-security mac-address sticky 
+ACC2(config-if-range)#switchport port-security violation shutdown 
+ACC2(config-if-range)#spanning-tree bpduguard enable
+
+============================================================================
+ACC3
+
+ACC3(config)#vtp mode client
+ACC3(config)#vtp domain mayar
+ACC3(config)#vtp password 1234
+ACC3(config)#interface range f0/1 - 2
+ACC3(config-if-range)#switchport access vlan 50
+ACC3(config-if-range)#interface range f0/3 - 4
+ACC3(config-if-range)#switchport access vlan 60
+ACC3(config)#interface range f0/1 - 4
+ACC3(config-if-range)#switchport mode access 
+ACC3(config-if-range)#switchport port-security 
+ACC3(config-if-range)#switchport port-security maximum 1
+ACC3(config-if-range)#switchport port-security mac-address sticky 
+ACC3(config-if-range)#switchport port-security violation shutdown 
+ACC3(config-if-range)#spanning-tree bpduguard enable
+
+============================================================================
+ACC4
+
+ACC4(config)#vtp mode client
+ACC4(config)#vtp domain mayarr
+ACC4(config)#vtp password 1234
+ACC4(config)#interface range f0/1 - 2
+ACC4(config-if-range)#switchport access vlan 70
+ACC4(config-if-range)#interface range f0/3 - 4
+ACC4(config-if-range)#switchport access vlan 80
+ACC4(config)#interface range f0/1 - 4
+ACC4(config-if-range)#switchport mode access 
+ACC4(config-if-range)#switchport port-security 
+ACC4(config-if-range)#switchport port-security maximum 1
+ACC4(config-if-range)#switchport port-security mac-address sticky 
+ACC4(config-if-range)#switchport port-security violation shutdown 
+ACC4(config-if-range)#spanning-tree bpduguard enable 
+
+============================================================================
+ACC5
+
+ACC5(config)#vtp mode client
+ACC5(config)#vtp domain mayarr
+ACC5(config)#vtp password 1234
+ACC5(config)#interface range f0/1 - 2
+ACC5(config-if-range)#switchport access vlan 90
+ACC5(config-if-range)#interface range f0/3 - 4
+ACC5(config-if-range)#switchport access vlan 100
+ACC5(config)#interface range f0/1 - 4
+ACC5(config-if-range)#switchport mode access 
+ACC5(config-if-range)#switchport port-security 
+ACC5(config-if-range)#switchport port-security maximum 1
+ACC5(config-if-range)#switchport port-security mac-address sticky 
+ACC5(config-if-range)#switchport port-security violation shutdown 
+ACC5(config-if-range)#spanning-tree bpduguard enable 
+
+============================================================================
+ACC6
+
+ACC6(config)#vtp mode client
+ACC6(config)#vtp domain mayarr
+ACC6(config)#vtp password 1234
+ACC6(config)#interface range f0/1 - 2
+ACC6(config-if-range)#switchport access vlan 110
+ACC6(config-if-range)#interface range f0/3 - 4
+ACC6(config-if-range)#switchport access vlan 120
+ACC6(config)#interface range f0/1 - 4
+ACC6(config-if-range)#switchport mode access 
+ACC6(config-if-range)#switchport port-security 
+ACC6(config-if-range)#switchport port-security maximum 1
+ACC6(config-if-range)#switchport port-security mac-address sticky 
+ACC6(config-if-range)#switchport port-security violation shutdown 
+ACC6(config-if-range)#spanning-tree bpduguard enable
+
+
+
+
