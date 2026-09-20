@@ -44,7 +44,11 @@ To verify full end-to-end connectivity, I checked the routing table on the core 
 
 ---
 
-## 🛠️ Tools Used
+## 🛠️ Tools & Devices Used
 * **Simulator:** Cisco Packet Tracer
-* **Devices:** Cisco Multilayer Switches (3560), Access Switches (2960), and Routers.
+* **Hardware Profile:**
+  * Multilayer Switches (L3 Switches)
+  * Access Layer Switches (L2 Switches)
+  * Routers
+  * End-User PCs
 
