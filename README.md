@@ -37,6 +37,13 @@ To verify full end-to-end connectivity, I checked the routing table on the core 
 
 ---
 
+## 📁 Repository Files
+
+* You can download and test the full simulation file: `task2multiLayerSW.pkt`.
+* All CLI commands and configurations used in this project are saved in: `configurations.txt`.
+
+---
+
 ## 🛠️ Tools Used
 * **Simulator:** Cisco Packet Tracer
 * **Devices:** Cisco Multilayer Switches (3560), Access Switches (2960), and Routers.
