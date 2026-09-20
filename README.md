@@ -40,7 +40,7 @@ To verify full end-to-end connectivity, I checked the routing table on the core 
 ## 📁 Repository Files
 
 * You can download and test the full simulation file: `task2multiLayerSW.pkt`.
-* All CLI commands and configurations used in this project are saved in: `configurations.txt`.
+* All CLI commands and configurations used in this project are saved in: `configration.txt`.
 
 ---
 
